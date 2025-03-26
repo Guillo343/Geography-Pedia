@@ -2,16 +2,9 @@ import React, { Suspense } from "react";
 import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-// import { Earth } from "./Earth"; 
+import { Earth } from "./Earth"; 
 
 export const Hero = () => {
-  const scrollToNextSection = () => {
-    const nextSection = document.querySelector("#hero").nextElementSibling;
-    if (nextSection) {
-      nextSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
     <section id="hero" className="relative h-screen flex flex-col justify-center items-center text-center text-white">
       {/* Background Gradient */}
@@ -19,7 +12,7 @@ export const Hero = () => {
 
       {/* Content */}
       <motion.div
-        className="space-y-6 max-w-3xl px-6"
+        className="space-y-6 max-w-3xl px-6 z-10"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
@@ -44,26 +37,20 @@ export const Hero = () => {
       </motion.div>
 
       {/* 3D Earth */}
-      {/* <div className="w-full h-96">
-        <Canvas>
+      <div className="absolute bottom-0 w-full h-96">
+        <Canvas camera={{ position: [0, 0, 4] }}>
           <ambientLight intensity={0.5} />
           <pointLight position={[5, 5, 5]} />
           <Suspense fallback={null}>
             <Earth />
-            <OrbitControls enableZoom={false} autoRotate />
+            <OrbitControls 
+              enableZoom={false} 
+              autoRotate 
+              autoRotateSpeed={0.5}
+            />
           </Suspense>
         </Canvas>
-      </div> */}
-
-      {/* Scroll Indicator */}
-      <motion.div
-        className="absolute bottom-10 cursor-pointer"
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
-        onClick={scrollToNextSection}
-      >
-        <span className="block w-4 h-4 border-b-2 border-r-2 border-white transform rotate-45"></span>
-      </motion.div>
+      </div>
     </section>
   );
 };
