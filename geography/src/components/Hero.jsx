@@ -2,7 +2,7 @@ import React, { Suspense } from "react";
 import { motion } from "framer-motion";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
-import { Earth } from "./Earth"; 
+import { Earth } from "./Earth";
 
 export const Hero = () => {
   return (
@@ -38,19 +38,26 @@ export const Hero = () => {
 
       {/* 3D Earth */}
       <div className="absolute bottom-0 w-full h-96">
-        <Canvas camera={{ position: [0, 0, 4] }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[5, 5, 5]} />
-          <Suspense fallback={null}>
-            <Earth />
-            <OrbitControls 
-              enableZoom={false} 
-              autoRotate 
-              autoRotateSpeed={0.5}
-            />
-          </Suspense>
-        </Canvas>
+        <EarthCanvas />
       </div>
     </section>
+  );
+};
+
+// Separate Earth Canvas Component
+const EarthCanvas = () => {
+  return (
+    <Canvas camera={{ position: [0, 0, 4] }}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[5, 5, 5]} />
+      <Suspense fallback={null}>
+        <Earth />
+        <OrbitControls 
+          enableZoom={false} 
+          autoRotate 
+          autoRotateSpeed={0.5}
+        />
+      </Suspense>
+    </Canvas>
   );
 };
